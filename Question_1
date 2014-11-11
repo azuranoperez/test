@@ -1,0 +1,32 @@
+
+
+1. Yes, it could be achieved by uploading the csv files into a table called thirdparty. This table would have the following fields: 
+   timestamp (timestamp of insertion), metric, rate_paid, rate_charged, campaign_id (primary key), start_date and end_date.
+
+   To ensure data accuracy, an optimal schedule plan should be determined by looking at how often the csv files are updated.
+    
+   The upload will be not done directly onto the table, but on a temporary table with the same structure. The main table will be updated afterwards 
+   with the new entries using a procedure.
+
+   An alternative could be to create users and grant them permissions (insert) accordingly. 
+
+   To ensure data integrity, start_date and end_date fields on campaigns table will have to comply with charge start date and charge end date on thirdparty. 
+
+2. Adding a new column, data_cost (DC), to the delivery_by_day table. This field will be populated after each updating process on thirdparty by a procedure. This procedure 
+   will calculate the data cost as follows:
+
+      - It will look for rows with new inserted campaign_id and a valid date. 
+
+      - It will calculate data_cost based on the metric and the rates from thirdparty
+
+   Profitability could be then calculated for each campaign in any time scale as CC-MC-DC/CC with the fields cost_to_client, media_cost and data_cost
+
+3. Yes, by using the timestamp field of thirdparty table. It could be feasible, if the uploading process is not very frequent, to insert the csv file timestamp
+   in the timestamp field.
+
+ 
+
+
+
+
+
